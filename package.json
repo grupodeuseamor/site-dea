@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:e2e": "playwright test",
+    "test:e2e:states": "node tests/browser-selection-states.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -11,7 +14,8 @@
     "format": "biome format --write",
     "format:check": "biome format",
     "typecheck": "tsc --noEmit",
-    "check": "biome check --error-on-warnings && npm run typecheck"
+    "check": "biome check --error-on-warnings && npm run typecheck",
+    "test:specs": "npm test"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
@@ -25,12 +29,16 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
+    "@playwright/test": "^1.65.0",
     "@tailwindcss/turbopack": "^4",
-    "@types/node": "^20",
+    "@types/node": "^24.19.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "shadcn": "^4.23.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=24"
   }
 }

@@ -18,7 +18,7 @@ O projeto funciona como uma vitrine virtual com carrinho de compras integrado, p
 ## 🚀 Começando
 
 ### Pré-requisitos
-- Node.js 20+ instalado
+- Node.js 24+ instalado (`nvm use`)
 - npm ou pnpm
 
 ### Instalação e Execução
@@ -49,6 +49,18 @@ Abra [http://localhost:3000](http://localhost:3000) no navegador para visualizar
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | Recomendada | Número que recebe os pedidos do carrinho, só dígitos (DDI + DDD + número), ex.: `5544999701412`. Sem ela, o carrinho esconde o botão "Confirmar pelo WhatsApp" e mostra um aviso. |
 
 Na Vercel, cadastre em **Settings → Environment Variables** (Production e Preview). Por ser `NEXT_PUBLIC_`, o valor entra no bundle no build: depois de mudar, faça um novo deploy.
+
+### Faixa de produtos em destaque
+
+Edite `editorialProductIds` em [`src/config/home.ts`](src/config/home.ts) com os IDs do catálogo na ordem desejada. Esta é a única fonte de seleção e ordem da faixa. `Product.featured` é um marcador geral legado, atualmente sem consumidor; `highlights` seleciona as abas Novidades/Promoções/Mais pedidos, e `order` ordena o catálogo. Esses campos não precisam coincidir com a curadoria da faixa. Na migração para o backend, preserve a seleção ordenada da home como configuração editorial própria, separada das categorias das abas. Use `[]` para ocultá-la. IDs repetidos, inexistentes, inativos e produtos sem nenhuma variação disponível são ignorados; produtos ativos sem variações continuam elegíveis.
+
+A faixa usa uma prateleira horizontal compacta: miniatura, nome e preço, com todos os itens do mesmo tamanho e sem sobreposição. A rolagem é manual por toque, trackpad ou teclado; a barra de rolagem fica oculta. O card inteiro abre o produto. O link “Ver todos” ficará oculto enquanto a seção de catálogo ainda for apenas um card modelo. Não há rotação automática nem controles de carrossel. Com um produto, ele fica alinhado ao início da fileira.
+
+### Testes da faixa
+
+Use Node.js 24+ (declarado em `engines` e `.nvmrc`). A suíte unitária usa o runner nativo `node:test`, sem um segundo framework; `npm run test:specs` é o alias padronizado para `npm test`. `npm test` valida seleção, ordem e disponibilidade. `npm run test:e2e` valida a home no Chromium do Playwright (`npx playwright install chromium` antes da primeira execução), incluindo prateleira, teclado, celular e continuidade até o link do WhatsApp (sem envio real). O servidor de testes usa a porta 3100 e um número fictício próprio.
+
+A suíte usa a seleção configurada. `npm run test:e2e:states` repete os testes com seleção vazia, única, IDs inválidos/repetidos e dois produtos em ordem invertida. Esse comando injeta `FEATURED_PRODUCT_IDS` (IDs separados por vírgula, vazio para ocultar) no servidor via `webServer.env`, sem alterar arquivos. Essa variável é exclusiva dos testes; não a configure no deploy. Precisa de pelo menos dois produtos elegíveis no catálogo.
 
 ---
 
