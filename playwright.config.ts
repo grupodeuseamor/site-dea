@@ -13,9 +13,6 @@ export default defineConfig({
     reuseExistingServer: false,
     env: {
       NEXT_PUBLIC_WHATSAPP_NUMBER: "5500000000000",
-      ...(process.env.FEATURED_PRODUCT_IDS !== undefined && {
-        FEATURED_PRODUCT_IDS: process.env.FEATURED_PRODUCT_IDS,
-      }),
     },
   },
 });

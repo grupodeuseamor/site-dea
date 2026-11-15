@@ -1,62 +1,38 @@
-import { FeaturedProducts } from "@/components/shop/home/FeaturedProducts";
-import { HeroBanner } from "@/components/shop/home/HeroBanner";
-import { Highlights } from "@/components/shop/home/Highlights";
-import { ProductCard } from "@/components/shop/product/ProductCard";
-import { featuredProductIds } from "@/config/home";
-import { selectFeaturedProducts } from "@/lib/featured-products";
-import { getProducts, getProductsByHighlight } from "@/lib/products";
+import { FeaturedProductHero } from "@/components/shop/home/FeaturedProductHero";
+import { ProductGrid } from "@/components/shop/product/ProductGrid";
+import { featuredHeroProductId } from "@/config/home";
+import { SITE_NAME } from "@/config/site";
+import { selectFeaturedHero } from "@/lib/featured-product";
+import { getProducts } from "@/lib/products";
 
 export default function HomePage() {
-  const [modelo] = getProducts();
-  const groups = {
-    novidades: getProductsByHighlight("novidades"),
-    promocoes: getProductsByHighlight("promocoes"),
-    "mais-pedidos": getProductsByHighlight("mais-pedidos"),
-  };
+  const products = getProducts();
+  const hero = selectFeaturedHero(products, featuredHeroProductId);
 
   return (
-    <main className="pb-12">
-      <HeroBanner />
-      <FeaturedProducts products={selectFeaturedProducts(getProducts(), featuredProductIds)} />
-
-      <div className="mx-auto flex max-w-5xl flex-col gap-10 px-3 pt-8 sm:px-6">
-        <section
-          id="destaques"
-          aria-labelledby="destaques-titulo"
-          className="flex scroll-mt-24 flex-col gap-4"
-        >
-          <h2
-            id="destaques-titulo"
-            className="font-display text-2xl font-black font-soft text-dea-blue sm:text-3xl"
-          >
-            Destaques
-          </h2>
-          <Highlights groups={groups} />
-        </section>
-
-        <section
-          id="catalogo"
-          aria-labelledby="catalogo-titulo"
-          className="flex scroll-mt-24 flex-col gap-4"
-        >
-          <div className="flex flex-col gap-1">
-            <h2
-              id="catalogo-titulo"
-              className="font-display text-2xl font-black font-soft text-dea-blue sm:text-3xl"
+    <main>
+      {hero ? (
+        <FeaturedProductHero product={hero} />
+      ) : (
+        <section aria-labelledby="home-titulo" className="bg-dea-night bg-grain text-dea-sand">
+          <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
+            <h1
+              id="home-titulo"
+              className="max-w-xl font-display text-4xl font-black font-soft text-dea-cream sm:text-5xl"
             >
-              Catálogo
-            </h2>
-            <p className="font-hand text-lg text-dea-muted">
-              Card modelo — o catálogo completo vem em breve.
+              {SITE_NAME}
+            </h1>
+            <p className="mt-3 max-w-md text-base text-dea-sand sm:text-lg">
+              Camisetas, terços e lembranças do Grupo Deus é Amor. Pagamento e retirada no encontro
+              de quinta-feira.
             </p>
           </div>
-          {modelo && (
-            <div className="max-w-xs">
-              <ProductCard product={modelo} />
-            </div>
-          )}
         </section>
-      </div>
+      )}
+
+      <section aria-label="Produtos" className="mx-auto max-w-5xl px-3 py-8 sm:px-6 sm:py-10">
+        <ProductGrid products={products} />
+      </section>
     </main>
   );
 }

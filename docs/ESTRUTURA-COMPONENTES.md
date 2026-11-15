@@ -10,9 +10,9 @@ Legenda: **[S]** Server Component · **[C]** Client Component (`"use client"`) �
 ```
 src/
 ├── app/                                ROTAS (finas: buscam dados e compõem)
-│   ├── layout.tsx                [S]   fontes, metadata, <CartProvider>, <SiteHeader>
+│   ├── layout.tsx                [S]   fontes, metadata, <LogoDefs>, <CartProvider>, <SiteHeader>, <SiteFooter>
 │   ├── globals.css                     tema: --color-dea-*, vars shadcn, efeitos (caderno, grão, fita)
-│   ├── page.tsx                  [S]   Início: HeroBanner → #destaques (Highlights) → #catalogo
+│   ├── page.tsx                  [S]   Início: FeaturedProductHero → grade com todo o catálogo
 │   ├── not-found.tsx             [S]   404 genérica do site
 │   ├── carrinho/page.tsx         [S]   metadata + <CartView/>
 │   └── produtos/[slug]/
@@ -22,16 +22,15 @@ src/
 ├── components/
 │   ├── ui/                             PRIMITIVAS genéricas (shadcn), sem regra de negócio
 │   │   ├── button.tsx            [S*]  cva com variantes e tamanhos
-│   │   ├── skeleton.tsx          [S]   bloco de carregamento (animate-pulse, aria-hidden)
-│   │   └── tabs.tsx              [C]   Radix Tabs em formato de "chips"
+│   │   └── skeleton.tsx          [S]   bloco de carregamento (animate-pulse, aria-hidden)
 │   ├── decor/                          ENFEITES "feito à mão" (HandDrawing, WashiTape)
-│   ├── icons/WhatsAppIcon.tsx    [S]   logo do WhatsApp em SVG inline
+│   ├── icons/                          Logo + LogoDefs (symbol/use, currentColor), InstagramIcon, WhatsAppIcon
 │   ├── providers/
 │   │   └── CartProvider.tsx      [C]   CartContext + hook useCart + localStorage("@dea:cart") + flag `hydrated`
 │   └── shop/                           COMPONENTES DA LOJA, por feature
-│       ├── layout/               SiteHeader [S], CartButton [C]
-│       ├── home/                 HeroBanner [S], Highlights [C]
-│       ├── product/              ProductCard [S], ProductDetails [C]
+│       ├── layout/               SiteHeader [S], SiteFooter [S], CartButton [C]
+│       ├── home/                 FeaturedProductHero [S]
+│       ├── product/              ProductCard [S], ProductGrid [S], ProductDetails [C]
 │       └── cart/
 │           ├── CartView.tsx      [C]   orquestra os estados: carregando → vazio → com itens
 │           ├── CartSkeleton.tsx  [S]   carregamento com linhas falsas na pauta (role=status)
@@ -41,13 +40,15 @@ src/
 │           └── notebook.ts       [—]   ON_LINE: classe que apoia o texto na pauta de 32px
 │
 ├── lib/
-│   ├── products.ts               [—]   getProducts / getProductBySlug / getProductsByHighlight
+│   ├── products.ts               [—]   getProducts / getProductBySlug
+│   ├── featured-product.ts       [—]   selectFeaturedHero (produto de abertura da home)
 │   ├── formatters.ts             [—]   formatCentsToBRL (centavos → "R$ 65,00")
 │   ├── whatsapp.ts               [—]   buildWhatsAppOrderMessage (pura), buildWhatsAppUrl, truncateText
 │   └── utils.ts                  [—]   cn
 ├── config/
 │   ├── contact.ts                [—]   WHATSAPP_NUMBER, lido de NEXT_PUBLIC_WHATSAPP_NUMBER
-│   └── site.ts                   [—]   SITE_NAME
+│   ├── home.ts                   [—]   featuredHeroProductId (abertura)
+│   └── site.ts                   [—]   SITE_NAME, GROUP_NAME
 ├── types/                        product.ts, cart.ts
 └── data/products.json            produtos de exemplo (preços em centavos)
 ```
@@ -65,10 +66,12 @@ src/
 
 | Onde | Como estender |
 |---|---|
-| `data/products.json` → `lib/products.ts` | Trocar a fonte (CMS/API/planilha) mantendo as assinaturas `getProducts`/`getProductBySlug`/`getProductsByHighlight`. Se virarem `async`, as páginas já são Server Components e é só usar `await` |
-| `types/product.ts` | Campos prontos: `categoryId`, `featured`, `order`, `badge`, `compareAtPrice`, `highlights`, `variants[].available`, `images[].kind` |
+| `data/products.json` → `lib/products.ts` | Trocar a fonte (CMS/API/planilha) mantendo as assinaturas `getProducts`/`getProductBySlug`. Se virarem `async`, as páginas já são Server Components e é só usar `await` |
+| `types/product.ts` | Campos prontos: `categoryId`, `featured`, `order`, `badge`, `compareAtPrice`, `variants[].available`, `images[].kind` |
 | `shop/product/ProductCard.tsx` | Card sem estado com `product` como única prop. Pode ganhar variantes (`compact`, `featured`) sem quebrar a Início |
-| `app/page.tsx` seção `#catalogo` | Trocar o card único por `<ProductGrid products={getProducts()} />` e, depois, filtros por `categoryId` via `searchParams` |
+| `shop/product/ProductGrid.tsx` | Grade responsiva com todo o catálogo; filtros por `categoryId` via `searchParams` entram aqui |
+| `config/home.ts` → `featuredHeroProductId` | Trocar o produto único da faixa de abertura (id de `products.json`); `undefined` desativa a faixa |
+| `shop/home/FeaturedProductHero.tsx` | Hoje a imagem é uma ilustração SVG num painel areia; com a foto real, vira imagem full-bleed com degradê (como no `.prod-hero` da galeria) |
+| `app/page.tsx` grade | A grade já mostra `getProducts()`; filtros por `categoryId` entram via `searchParams` |
 | `shop/product/ProductDetails.tsx` | Galeria, descrição longa, guia de tamanhos. Usar `useCart().addItem({...})`, que já agrupa por produto+variação |
-| `shop/home/Highlights.tsx` | Novas abas: adicionar ao tipo `ProductHighlight` e ao array `tabs` |
 | `shop/cart/*` | Novas partes do carrinho (frete, cupom) entram como componentes ao lado de `CartSummary`; o `CartView` só decide o estado |

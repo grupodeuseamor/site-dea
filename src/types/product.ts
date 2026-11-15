@@ -1,7 +1,5 @@
 export type ProductImageKind = "product" | "detail";
 
-export type ProductHighlight = "novidades" | "promocoes" | "mais-pedidos";
-
 export interface ProductImage {
   /** Caminho local (`/images/...`) ou URL completa (`https://...`). */
   url: string;
@@ -27,12 +25,10 @@ export interface Product {
   compareAtPrice?: number;
   images: ProductImage[];
   variants: ProductVariant[];
-  /** Marcador geral legado; não seleciona a faixa editorial nem as abas da home. */
+  /** Marcador geral legado; não seleciona o produto em destaque. */
   featured: boolean;
   active: boolean;
-  /** Ordem no catálogo, independente da faixa editorial da home. */
+  /** Ordem no catálogo. */
   order: number;
   badge?: string;
-  /** Seções de destaque da Página Inicial em que o produto aparece. */
-  highlights?: ProductHighlight[];
 }
