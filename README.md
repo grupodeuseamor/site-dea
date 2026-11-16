@@ -50,17 +50,15 @@ Abra [http://localhost:3000](http://localhost:3000) no navegador para visualizar
 
 Na Vercel, cadastre em **Settings → Environment Variables** (Production e Preview). Por ser `NEXT_PUBLIC_`, o valor entra no bundle no build: depois de mudar, faça um novo deploy.
 
-### Faixa de produtos em destaque
+### Home e produto em destaque
 
-Edite `editorialProductIds` em [`src/config/home.ts`](src/config/home.ts) com os IDs do catálogo na ordem desejada. Esta é a única fonte de seleção e ordem da faixa. `Product.featured` é um marcador geral legado, atualmente sem consumidor; `highlights` seleciona as abas Novidades/Promoções/Mais pedidos, e `order` ordena o catálogo. Esses campos não precisam coincidir com a curadoria da faixa. Na migração para o backend, preserve a seleção ordenada da home como configuração editorial própria, separada das categorias das abas. Use `[]` para ocultá-la. IDs repetidos, inexistentes, inativos e produtos sem nenhuma variação disponível são ignorados; produtos ativos sem variações continuam elegíveis.
+A home abre com o produto definido por `featuredHeroProductId` em [`src/config/home.ts`](src/config/home.ts) e, logo abaixo, mostra a grade com todo o catálogo. O CTA do destaque e os cards da grade levam para `/produtos/[slug]`. IDs inexistentes, produtos inativos ou sem variação disponível ocultam a faixa; `undefined` desativa o destaque.
 
-A faixa usa uma prateleira horizontal compacta: miniatura, nome e preço, com todos os itens do mesmo tamanho e sem sobreposição. A rolagem é manual por toque, trackpad ou teclado; a barra de rolagem fica oculta. O card inteiro abre o produto. O link “Ver todos” ficará oculto enquanto a seção de catálogo ainda for apenas um card modelo. Não há rotação automática nem controles de carrossel. Com um produto, ele fica alinhado ao início da fileira.
+### Testes
 
-### Testes da faixa
+Use Node.js 24+ (declarado em `engines` e `.nvmrc`). A suíte unitária usa o runner nativo `node:test`, sem um segundo framework; `npm run test:specs` é o alias de `npm test`. `npm test` valida a seleção do produto em destaque. `npm run test:e2e` valida a home no Chromium do Playwright (`npx playwright install chromium` antes da primeira execução). O servidor de testes usa a porta 3100 e um número fictício próprio.
 
-Use Node.js 24+ (declarado em `engines` e `.nvmrc`). A suíte unitária usa o runner nativo `node:test`, sem um segundo framework; `npm run test:specs` é o alias padronizado para `npm test`. `npm test` valida seleção, ordem e disponibilidade. `npm run test:e2e` valida a home no Chromium do Playwright (`npx playwright install chromium` antes da primeira execução), incluindo prateleira, teclado, celular e continuidade até o link do WhatsApp (sem envio real). O servidor de testes usa a porta 3100 e um número fictício próprio.
-
-A suíte usa a seleção configurada. `npm run test:e2e:states` repete os testes com seleção vazia, única, IDs inválidos/repetidos e dois produtos em ordem invertida. Esse comando injeta `FEATURED_PRODUCT_IDS` (IDs separados por vírgula, vazio para ocultar) no servidor via `webServer.env`, sem alterar arquivos. Essa variável é exclusiva dos testes; não a configure no deploy. Precisa de pelo menos dois produtos elegíveis no catálogo.
+O Next 16 não permite dois `next dev` no mesmo diretório: pare o `npm run dev` antes de rodar `npm run test:e2e` (o Playwright sobe o servidor de testes sozinho). Hoje o CI roda apenas lint, formatação, typecheck e build — os testes unitários e o e2e são executados manualmente.
 
 ---
 

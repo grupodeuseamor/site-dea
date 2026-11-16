@@ -38,8 +38,7 @@
     "featured": true,
     "active": true,
     "order": 1,
-    "badge": "Novo lote",
-    "highlights": ["novidades"]
+    "badge": "Novo lote"
   },
   {
     "id": "terco-madeira-azul",
@@ -59,7 +58,6 @@
     "featured": true,
     "active": true,
     "order": 2,
-    "highlights": ["promocoes"],
     "badge": "Promoção",
     "compareAtPrice": 3000
   },
@@ -81,7 +79,6 @@
     "featured": true,
     "active": true,
     "order": 3,
-    "highlights": ["mais-pedidos", "novidades"],
     "badge": "Mais pedido"
   }
 ]

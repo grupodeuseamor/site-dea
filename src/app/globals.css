@@ -140,6 +140,12 @@
   transform: translateX(-50%) rotate(-3deg);
 }
 
+.mask-logo-dea {
+  aspect-ratio: 992 / 1586;
+  mask: url("/images/logo-dea.svg") center / contain no-repeat;
+  -webkit-mask: url("/images/logo-dea.svg") center / contain no-repeat;
+}
+
 @theme inline {
   --font-heading: var(--font-display);
   --font-sans: var(--font-ui);
@@ -226,13 +232,5 @@
   }
   html {
     @apply font-sans;
-  }
-}
-
-@utility scrollbar-hidden {
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
   }
 }
