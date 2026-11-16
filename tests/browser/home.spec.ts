@@ -15,7 +15,11 @@ test.describe("produto em destaque", () => {
     const band = page.getByRole("region", { name: "Produto em destaque", exact: true });
     await expect(band.getByRole("heading", { level: 1, name: hero.name })).toBeVisible();
     await expect(band).toContainText(formatCentsToBRL(hero.price));
-    await expect(band.getByText(hero.badge ?? "Novo lote")).toBeVisible();
+    if (hero.badge) {
+      await expect(band.getByText(hero.badge, { exact: true })).toBeVisible();
+    } else {
+      await expect(band.getByText("Novo lote", { exact: true })).toHaveCount(0);
+    }
     const cta = band.getByRole("link", { name: "Ver produto", exact: true });
     await expect(cta).toHaveAttribute("href", `/produtos/${hero.slug}`);
     await expect(band.getByRole("link", { name: /WhatsApp/ })).toHaveCount(0);
@@ -45,13 +49,33 @@ test.describe("grade de produtos", () => {
     }
   });
 
-  test("não tem navegação no topo e não vaza na horizontal", async ({ page }) => {
+  test("tem a âncora da grade e não sobrou link para âncora morta", async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 800 });
     await page.goto("/");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
       true,
     );
-    await expect(page.getByRole("navigation", { name: "Principal", exact: true })).toHaveCount(0);
+    await expect(page.locator("#produtos")).toBeVisible();
+    await expect(page.locator('a[href*="#destaques"], a[href*="#catalogo"]')).toHaveCount(0);
+  });
+});
+
+test.describe("links do carrinho", () => {
+  test("carrinho vazio aponta para a grade", async ({ page }) => {
+    await page.goto("/carrinho");
+    await expect(page.getByRole("link", { name: "Ver produtos", exact: true })).toHaveAttribute(
+      "href",
+      "/#produtos",
+    );
+  });
+
+  test("resumo do pedido aponta para a grade", async ({ page }) => {
+    await page.goto("/produtos/terco-madeira-azul");
+    await page.getByRole("button", { name: "Adicionar ao carrinho" }).click();
+    await page.goto("/carrinho");
+    await expect(
+      page.getByRole("link", { name: "Continuar comprando", exact: true }),
+    ).toHaveAttribute("href", "/#produtos");
   });
 });
 

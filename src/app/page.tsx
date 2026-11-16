@@ -30,7 +30,11 @@ export default function HomePage() {
         </section>
       )}
 
-      <section aria-label="Produtos" className="mx-auto max-w-5xl px-3 py-8 sm:px-6 sm:py-10">
+      <section
+        id="produtos"
+        aria-label="Produtos"
+        className="mx-auto max-w-5xl scroll-mt-20 px-3 py-8 sm:px-6 sm:py-10"
+      >
         <ProductGrid products={products} />
       </section>
     </main>

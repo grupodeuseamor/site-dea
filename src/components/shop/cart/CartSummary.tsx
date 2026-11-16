@@ -51,7 +51,7 @@ export function CartSummary({ items, totalItems, totalPrice }: CartSummaryProps)
             </p>
           )}
           <Button asChild variant="outline" size="lg">
-            <Link href="/">Continuar comprando</Link>
+            <Link href="/#produtos">Continuar comprando</Link>
           </Button>
         </div>
       </div>

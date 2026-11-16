@@ -57,7 +57,7 @@ export function CartView() {
             <HandDrawing name="coracao" className="size-14 text-dea-heart" />
             <p className="font-hand text-2xl text-dea-blue">Seu carrinho está vazio.</p>
             <Button asChild size="lg">
-              <Link href="/">Ver produtos</Link>
+              <Link href="/#produtos">Ver produtos</Link>
             </Button>
           </div>
         </NotebookSheet>

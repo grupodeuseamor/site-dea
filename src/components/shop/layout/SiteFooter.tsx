@@ -19,6 +19,7 @@ export function SiteFooter() {
         src="/images/grupo/faixa-grupo.jpg"
         alt=""
         fill
+        quality={50}
         sizes="100vw"
         className="-z-20 object-cover object-center"
       />

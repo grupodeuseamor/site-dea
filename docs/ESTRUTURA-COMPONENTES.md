@@ -10,9 +10,9 @@ Legenda: **[S]** Server Component · **[C]** Client Component (`"use client"`) �
 ```
 src/
 ├── app/                                ROTAS (finas: buscam dados e compõem)
-│   ├── layout.tsx                [S]   fontes, metadata, <LogoDefs>, <CartProvider>, <SiteHeader>, <SiteFooter>
+│   ├── layout.tsx                [S]   fontes, metadata, <CartProvider>, <SiteHeader>, <SiteFooter>
 │   ├── globals.css                     tema: --color-dea-*, vars shadcn, efeitos (caderno, grão, fita)
-│   ├── page.tsx                  [S]   Início: FeaturedProductHero → grade com todo o catálogo
+│   ├── page.tsx                  [S]   Início: FeaturedProductHero → #produtos (grade com todo o catálogo)
 │   ├── not-found.tsx             [S]   404 genérica do site
 │   ├── carrinho/page.tsx         [S]   metadata + <CartView/>
 │   └── produtos/[slug]/
@@ -24,7 +24,7 @@ src/
 │   │   ├── button.tsx            [S*]  cva com variantes e tamanhos
 │   │   └── skeleton.tsx          [S]   bloco de carregamento (animate-pulse, aria-hidden)
 │   ├── decor/                          ENFEITES "feito à mão" (HandDrawing, WashiTape)
-│   ├── icons/                          Logo + LogoDefs (symbol/use, currentColor), InstagramIcon, WhatsAppIcon
+│   ├── icons/                          Logo (máscara CSS + currentColor), InstagramIcon, WhatsAppIcon
 │   ├── providers/
 │   │   └── CartProvider.tsx      [C]   CartContext + hook useCart + localStorage("@dea:cart") + flag `hydrated`
 │   └── shop/                           COMPONENTES DA LOJA, por feature

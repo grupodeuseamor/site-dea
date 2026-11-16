@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Gochi_Hand, Jost, Newsreader } from "next/font/google";
 import "./globals.css";
-import { LogoDefs } from "@/components/icons/Logo";
 import { CartProvider } from "@/components/providers/CartProvider";
 import { SiteFooter } from "@/components/shop/layout/SiteFooter";
 import { SiteHeader } from "@/components/shop/layout/SiteHeader";
@@ -56,7 +55,6 @@ export default function RootLayout({
       className={cn(fraunces.variable, jost.variable, gochiHand.variable, newsreader.variable)}
     >
       <body className="font-ui antialiased bg-dea-paper text-dea-ink min-h-screen overflow-x-hidden">
-        <LogoDefs />
         <CartProvider>
           <div className="flex min-h-screen flex-col">
             <SiteHeader />

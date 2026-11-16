@@ -37,9 +37,11 @@ export function FeaturedProductHero({ product }: FeaturedProductHeroProps) {
 
       <div className="mx-auto grid max-w-5xl items-center gap-8 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-2 lg:gap-12">
         <div className="flex flex-col items-start gap-4">
-          <span className="-rotate-2 rounded-sm bg-dea-heart px-2 py-0.5 text-sm font-semibold tracking-wide text-dea-cream uppercase">
-            {product.badge ?? "Novo lote"}
-          </span>
+          {product.badge && (
+            <span className="-rotate-2 rounded-sm bg-dea-heart px-2 py-0.5 text-sm font-semibold tracking-wide text-dea-cream uppercase">
+              {product.badge}
+            </span>
+          )}
           <h1 className="max-w-xl font-display text-4xl font-black font-soft text-dea-cream sm:text-5xl">
             {product.name}
           </h1>
@@ -71,7 +73,8 @@ export function FeaturedProductHero({ product }: FeaturedProductHeroProps) {
                 alt={image.alt}
                 fill
                 unoptimized
-                priority
+                loading="eager"
+                fetchPriority="high"
                 sizes="(min-width: 1024px) 40vw, 90vw"
                 className="object-contain p-6"
               />
