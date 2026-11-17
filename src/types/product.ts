@@ -18,7 +18,7 @@ export interface Product {
   slug: string;
   name: string;
   description: string;
-  categoryId: string;
+  categoryIds: string[];
   /** Preço em centavos (ex.: 6500 = R$ 65,00). */
   price: number;
   /** Preço "de" em centavos, para itens em promoção. */
