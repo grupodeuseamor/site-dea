@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -33,8 +32,7 @@ export function ProductGrid({ products }: ProductGridProps) {
 
   const filteredProducts = products.filter((product) => {
     const matchesCategory =
-      selectedCategory === "tudo" ||
-      product.categoryIds.includes(selectedCategory);
+      selectedCategory === "tudo" || product.categoryIds.includes(selectedCategory);
 
     const normalizedSearch = normalizeText(searchTerm.trim());
 
