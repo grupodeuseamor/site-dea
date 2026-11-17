@@ -1,10 +1,11 @@
+
 [
   {
     "id": "camiseta-sagrado-coracao",
     "slug": "camiseta-sagrado-coracao",
     "name": "Camiseta Sagrado Coração",
     "description": "Camiseta 100% algodão azul com o Sagrado Coração estampado na frente e \"Deus é Amor\" nas costas.",
-    "categoryId": "camisetas",
+    "categoryIds": ["camisetas", "jesus"],
     "price": 6500,
     "images": [
       {
@@ -14,26 +15,10 @@
       }
     ],
     "variants": [
-      {
-        "id": "camiseta-sagrado-coracao-p",
-        "label": "P",
-        "available": true
-      },
-      {
-        "id": "camiseta-sagrado-coracao-m",
-        "label": "M",
-        "available": true
-      },
-      {
-        "id": "camiseta-sagrado-coracao-g",
-        "label": "G",
-        "available": true
-      },
-      {
-        "id": "camiseta-sagrado-coracao-gg",
-        "label": "GG",
-        "available": true
-      }
+      { "id": "camiseta-sagrado-coracao-p", "label": "P", "available": true },
+      { "id": "camiseta-sagrado-coracao-m", "label": "M", "available": true },
+      { "id": "camiseta-sagrado-coracao-g", "label": "G", "available": true },
+      { "id": "camiseta-sagrado-coracao-gg", "label": "GG", "available": true }
     ],
     "featured": true,
     "active": true,
@@ -45,7 +30,7 @@
     "slug": "terco-madeira-azul",
     "name": "Terço de Madeira Azul",
     "description": "Terço artesanal com contas de madeira pintadas de azul e crucifixo de metal.",
-    "categoryId": "devocao",
+    "categoryIds": ["devocao", "terco"],
     "price": 2500,
     "images": [
       {
@@ -66,7 +51,7 @@
     "slug": "caneca-deus-e-amor",
     "name": "Caneca Deus é Amor",
     "description": "Caneca de cerâmica 325 ml com o logo do grupo. Pode ir ao micro-ondas.",
-    "categoryId": "acessorios",
+    "categoryIds": ["acessorios"],
     "price": 3500,
     "images": [
       {
@@ -80,5 +65,53 @@
     "active": true,
     "order": 3,
     "badge": "Mais pedido"
+  },
+  {
+    "id": "camiseta-imaculado-coracao-maria",
+    "slug": "camiseta-imaculado-coracao-maria",
+    "name": "Camiseta Imaculado Coração de Maria",
+    "description": "Camiseta do grupo Deus é Amor com o tema Imaculado Coração de Maria.",
+    "categoryIds": ["maria", "camisetas"],
+    "price": 6500,
+    "images": [
+      {
+        "url": "/images/products/camiseta-sagrado-coracao.svg",
+        "alt": "Imagem padrão ilustrativa de camiseta",
+        "kind": "product"
+      }
+    ],
+    "variants": [
+      { "id": "camiseta-imaculado-coracao-maria-p", "label": "P", "available": true },
+      { "id": "camiseta-imaculado-coracao-maria-m", "label": "M", "available": true },
+      { "id": "camiseta-imaculado-coracao-maria-g", "label": "G", "available": true },
+      { "id": "camiseta-imaculado-coracao-maria-gg", "label": "GG", "available": true }
+    ],
+    "featured": false,
+    "active": true,
+    "order": 4
+  },
+  {
+    "id": "camiseta-nossa-senhora-guadalupe",
+    "slug": "camiseta-nossa-senhora-guadalupe",
+    "name": "Camiseta Nossa Senhora de Guadalupe",
+    "description": "Camiseta do grupo Deus é Amor com o tema Nossa Senhora de Guadalupe.",
+    "categoryIds": ["maria", "camisetas"],
+    "price": 6500,
+    "images": [
+      {
+        "url": "/images/products/camiseta-sagrado-coracao.svg",
+        "alt": "Imagem padrão ilustrativa de camiseta",
+        "kind": "product"
+      }
+    ],
+    "variants": [
+      { "id": "camiseta-nossa-senhora-guadalupe-p", "label": "P", "available": true },
+      { "id": "camiseta-nossa-senhora-guadalupe-m", "label": "M", "available": true },
+      { "id": "camiseta-nossa-senhora-guadalupe-g", "label": "G", "available": true },
+      { "id": "camiseta-nossa-senhora-guadalupe-gg", "label": "GG", "available": true }
+    ],
+    "featured": false,
+    "active": true,
+    "order": 5
   }
 ]
